@@ -1,0 +1,30 @@
+- 
+  name: droplet_test
+  hosts: droplet
+  become: true
+  vars:
+    my_name: Sumanjeet
+  tasks:
+    - name: update packages
+      command: apt-get update -y
+    - name: install nginx
+      apt: pkg=nginx state=present
+    - name: Execute command date
+      command: date
+    - name: Print current working directory
+      command: pwd
+      register: pwd_output
+    - name: Show current working directory
+      debug:
+        msg: "Current working directory is: {{ pwd_output.stdout }}" 
+    - name: demonstrate env variable
+      shell: echo "Hello {{ my_name }}" >> /root/ansible.txt
+      register: echo_output
+      ignore_errors: true
+    - name: Debug echo command output
+      debug:
+        msg: "Echo command output: {{ echo_output.stdout }}"
+    - name: Debug echo command error
+      debug:
+        msg: "Echo command error: {{ echo_output.stderr }}"
+    
