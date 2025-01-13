@@ -1,0 +1,14 @@
+- name: Install nginx
+  hosts: droplet
+  tasks:
+    - name: Install nginx on Ubuntu 16.04
+      apt:
+        name: nginx
+        state: present
+      when: ansible_os_family == "Debian" or ansible_distribution_version == "16.04"
+
+    - name: Install nginx on RedHat or SUSE
+      yum:
+        name: nginx
+        state: present
+      when: ansible_os_family in ["RedHat", "SUSE"]
