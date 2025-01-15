@@ -1,6 +1,7 @@
 resource "local_file" "pet" {
     filename = var.filename
     content = "${random_pet.name.id}"
+    depends_on = [ random_pet.name ]
 }
 
 resource "random_pet" "name" {
